@@ -1,7 +1,7 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = '1'
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 os.environ["TOKENIZERS_PARALLELISM"] = "true"
-os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
+os.environ['CUDA_LAUNCH_BLOCKING'] = '0'
 import cv2
 import habitat
 import datetime
@@ -31,10 +31,10 @@ if __name__=="__main__":
     args.task_stage = "val"
     args.graph_train = False
     args.root = "/home/zhaishichao/Data/VLN"
-    args.model_file_name = "Models_train"
-    args.graph_pre_model = 445
+    args.model_file_name = "Models"
+    args.graph_pre_model = 1
     args.logger_file_name = "./log_files/log_"+datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-    args.graph_episode_num = 1000
+    args.graph_episode_num = 100
     args.success_distance = 1.0
     args.max_steps = 500
 
@@ -51,9 +51,9 @@ if __name__=="__main__":
     habitat_config = hm3d_config(stage=args.task_stage, episodes=args.graph_episode_num, max_steps=args.max_steps)
     habitat_env = habitat.Env(config=habitat_config)
 
-    # experiment_details = 'graph_'  + rl_args.graph_task + '_' + rl_args.graph_action_space + \
-    #     '_'+ rl_args.graph_encoder
-    experiment_details = "graph_object_goal_navigation_adjacent_GAT_2024_11_06_15_54_28"
+    experiment_details = 'graph_'  + rl_args.graph_task + '_' + rl_args.graph_action_space + \
+        '_'+ rl_args.graph_encoder
+    #experiment_details = "graph_object_goal_navigation_adjacent_GAT_2024_11_06_15_54_28"
     init_free_memory, init_process_memory = process_info()
     policy = init_RL(args, rl_args, experiment_details)
 
